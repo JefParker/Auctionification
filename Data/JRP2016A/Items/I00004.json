@@ -1,0 +1,37 @@
+{
+    "Item": {
+        "Name": "Item 4",
+        "UUID": "I00004",
+        "ShortDescription": "A fourth cool thing",
+        "Description": "A fourth cool thing blah blah blah",
+        "Value": "440",
+        "BidSteps": "10",
+        "StartingPrice": "400",
+        "Reserve": "430",
+        "Starts": 1425693600000,
+        "Ends": 1427943600000,
+        "Message": "",
+        "Show": true,
+        "MaxBid": {
+            "MaxBid": "520",
+            "User": "Ucq400000"
+        },
+        "BidHistory": [
+            {
+                "User": "Ucq400000",
+                "Bid": 400,
+                "Time": "1425921714094"
+            },
+            {
+                "User": "Uzyg00002",
+                "Bid": "410",
+                "Time": "1425921814094"
+            },
+            {
+                "User": "Ucq400000",
+                "Bid": "420",
+                "Time": "1425921824094"
+            }
+        ]
+    }
+}

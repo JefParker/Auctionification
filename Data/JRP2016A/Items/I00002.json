@@ -1,0 +1,52 @@
+{
+    "Item": {
+        "Name": "Item 2",
+        "UUID": "I00002",
+        "ShortDescription": "Another cool thing",
+        "Description": "Another cool thing blah blah blah",
+        "Value": "250",
+        "BidSteps": "5",
+        "StartingPrice": "150",
+        "Reserve": "200",
+        "Starts": 1425693600000,
+        "Ends": 1427943600000,
+        "Message": "",
+        "Show": true,
+        "MaxBid": {
+            "MaxBid": "155",
+            "User": "Ucq400000"
+        },
+        "BidHistory": [
+            {
+                "User": "Ucq400000",
+                "Bid": 150,
+                "Time": "1425911810950",
+                "Type": "Bid"
+            },
+            {
+                "User": "Uzyg00002",
+                "Bid": "160",
+                "Time": "1425921810950",
+                "Type": "Bid"
+            },
+            {
+                "User": "Ucq400000",
+                "Bid": "165",
+                "Time": "1425923911366",
+                "Type": "Bid"
+            },
+            {
+                "User": "Uzyg00002",
+                "Bid": "170",
+                "Time": "1425924011366",
+                "Type": "Bid"
+            },
+            {
+                "Bid": "175",
+                "User": "Ucq400000",
+                "Time": "1426482969483",
+                "Type": "Bid"
+            }
+        ]
+    }
+}

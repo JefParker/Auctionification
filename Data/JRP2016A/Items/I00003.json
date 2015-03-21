@@ -1,0 +1,44 @@
+{
+    "Item": {
+        "Name": "Item 3",
+        "UUID": "I00003",
+        "ShortDescription": "A super cool thing",
+        "Description": "A super cool thing blah blah blah",
+        "Value": "360",
+        "BidSteps": "10",
+        "StartingPrice": "300",
+        "Reserve": "340",
+        "Starts": 1425693600000,
+        "Ends": 1427943600000,
+        "Message": "",
+        "Show": true,
+        "MaxBid": {
+            "MaxBid": "400",
+            "User": "Uzyg00002"
+        },
+        "BidHistory": [
+            {
+                "User": "Ucq400000",
+                "Bid": 300,
+                "Time": "1425921802581"
+            },
+            {
+                "User": "Uzyg00002",
+                "Bid": "310",
+                "Time": "1425921812581"
+            },
+            {
+                "Bid": "320",
+                "User": "Ucq400000",
+                "Time": "1426483018381",
+                "Type": "Bid"
+            },
+            {
+                "Bid": "330",
+                "User": "Uzyg00002",
+                "Time": "1426483018381",
+                "Type": "Bid"
+            }
+        ]
+    }
+}

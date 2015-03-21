@@ -1,0 +1,25 @@
+{
+    "Item": {
+        "Name": "Item 0",
+        "UUID": "I00000",
+        "ShortDescription": "A nifty thing",
+        "Description": "A nifty thing blah blah blah",
+        "Value": "140",
+        "BidSteps": "10",
+        "StartingPrice": "90",
+        "Reserve": "160",
+        "Starts": 1425693600000,
+        "Ends": 1427943600000,
+        "Message": "",
+        "Show": false,
+        "MaxBid": {},
+        "BidHistory": [
+            {
+                "Bid": "110",
+                "User": "Ucq400000",
+                "Time": "1426524737941",
+                "Type": "Max Bid 2"
+            }
+        ]
+    }
+}

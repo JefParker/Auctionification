@@ -1,0 +1,20 @@
+{
+    "Item": {
+        "Name": "Hats",
+        "UUID": "I00005",
+        "ShortDescription": "Hats hats",
+        "Description": "Hats hats hats",
+        "Value": "12.00",
+        "StartingPrice": "9.00",
+        "Reserve": "14.00",
+        "BidSteps": "1.00",
+        "Starts": 1426726800000,
+        "Ends": 1427943660000,
+        "Message": "",
+        "Show": true,
+        "New": false,
+        "sAuctionID": "CEE2016A",
+        "MaxBid": {},
+        "BidHistory": []
+    }
+}

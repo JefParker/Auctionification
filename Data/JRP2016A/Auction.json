@@ -1,0 +1,50 @@
+{
+    "Name": "Jeff's Test Auction",
+    "Starts": 1426640400000,
+    "Ends": 1427943600000,
+    "Users": [
+        {
+            "Last": "Parker",
+            "First": "Jeff",
+            "UUID": "Ucq400000",
+            "EMail": "Jeff@Jeff-Parker.com",
+            "Cel": "310.751.0462",
+            "Username": "JefParker",
+            "Password": "password",
+            "Admin": true,
+            "WatchList": [
+                "I00000",
+                "I00001",
+                "I00002",
+                "I00003",
+                "I00004"
+            ]
+        },
+        {
+            "Last": "Leif",
+            "First": "Carol",
+            "UUID": "Ucl200001",
+            "EMail": "CarolLeif@GMail.com",
+            "Cel": "",
+            "Username": "CarolLeif",
+            "Password": "password",
+            "Admin": false,
+            "WatchList": []
+        },
+        {
+            "Last": "Carlson",
+            "First": "Nathan",
+            "UUID": "Uzyg00002",
+            "EMail": "Nathan@FancyMonkey.com",
+            "Cel": "818.636.6961",
+            "Username": "NathanCarlson",
+            "Password": "password",
+            "Admin": false,
+            "WatchList": [
+                "I00001",
+                "I00002",
+                "I00004"
+            ]
+        }
+    ]
+}
