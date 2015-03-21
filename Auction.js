@@ -84,7 +84,7 @@ function OnChangeAuctionID() {
 		GlobalX.data = null;
 		document.getElementById('Feedback').innerHTML = "<a href='javascript:LogInHelp()'>Is the auction ID correct?</a>";
 		document.getElementById('AuctionUserName').disabled = false;
-		$.post("http://MessyStudio.com/Chrome/Auction/Data/" + sAuctionID + "/Auction.json", {
+		$.post("Data/" + sAuctionID + "/Auction.json", {
 			Auction: '',
 			},
 			function(data, status){
@@ -106,7 +106,7 @@ function OnChangeAuctionID() {
 function LoadDataUsingAuctionIDAndUUID(sAuctionID, sUUID) {
 	GlobalX.data = null;
 	MakeLogInPage();
-	$.post("http://MessyStudio.com/Chrome/Auction/Data/" + sAuctionID + "/Auction.json", {
+	$.post("Data/" + sAuctionID + "/Auction.json", {
 		Auction: '',
 		},
 		function(data, status){
@@ -188,7 +188,7 @@ function UUIDLogIn(sUUID) {
 function LoadWatchListData() {
 	LoadWatchListData.nCounter = 0;
 	for (var j=0; j<GlobalX.WatchList.length; j++) {
-		$.post("http://MessyStudio.com/Chrome/Auction/Data/" + GlobalX.AuctionID + "/Items/" + GlobalX.WatchList[j] + ".json", {
+		$.post("Data/" + GlobalX.AuctionID + "/Items/" + GlobalX.WatchList[j] + ".json", {
 			Auction: '',
 			},
 			WatchListRawDataAsArray, "json");
