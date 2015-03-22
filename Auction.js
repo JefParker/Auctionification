@@ -292,7 +292,7 @@ function OnClickCreateNewAccount() {
 	objNewUser.Admin = false;
 	objNewUser.WatchList = [];
 	var sNewUser = JSON.stringify(objNewUser);
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		SubmitNewUser: sNewUser,
 		},
 		function(data, status){
@@ -448,7 +448,7 @@ function SubmitBid(sItem, sAmount) {
 	objBid.sUUID = GlobalX.UUID;
 	objBid.sAuctionID = GlobalX.AuctionID;
 	var sBid = JSON.stringify(objBid);
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		SubmitBid: sBid,
 		},
 		function(data, status){
@@ -472,7 +472,7 @@ function SubmitMaxBid(sItem, sMaxAmount) {
 	objBid.sUUID = GlobalX.UUID;
 	objBid.sAuctionID = GlobalX.AuctionID;
 	var sMaxBid = JSON.stringify(objBid);
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		SubmitMaxBid: sMaxBid,
 		},
 		function(data, status){
@@ -498,7 +498,7 @@ function RemoveItemFromWatchList(sItem) {
 			objRemoveItem.sUUID = GlobalX.UUID;
 			objRemoveItem.sAuctionID = GlobalX.AuctionID;
 			var sRemoveItem = JSON.stringify(objRemoveItem);
-			$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+			$.post("Auction.php", {
 				RemoveItemFromWatch: sRemoveItem,
 				},
 				function(data, status) {
@@ -528,7 +528,7 @@ function RemoveItemFromWatchList(sItem) {
 }
 
 function GetItemList() {
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		GetItemsList: GlobalX.AuctionID,
 		},
 		function(data, status){
@@ -557,7 +557,7 @@ function MakeItemDetailPage(sItem) {
 	KillItemTimers();
 	var sPage = MakeMenuLink();
 	sPage += "<p class='Headline' style='text-align: center;' id='Welcome'>Item Detail</p>";
-	$.post("http://MessyStudio.com/Chrome/Auction/Data/" + GlobalX.AuctionID + "/Items/" + sItem + ".json", {
+	$.post("Data/" + GlobalX.AuctionID + "/Items/" + sItem + ".json", {
 		Nada: '',
 		},
 		function(data, status) {
@@ -653,7 +653,7 @@ function AddItemToWatchList(sItem) {
 			objAddItem.sUUID = GlobalX.UUID;
 			objAddItem.sAuctionID = GlobalX.AuctionID;
 			var sAddItem = JSON.stringify(objAddItem);
-			$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+			$.post("Auction.php", {
 				AddItemToWatch: sAddItem,
 				},
 				function(data, status) {
@@ -719,7 +719,7 @@ function MakeItemDetailUpdate(objItemData) {
 function RefreshItemDetail(sItem) {
 	document.getElementById(sItem+'r').style.display = 'none';
 	setTimeout(function(){if (document.getElementById(sItem+'r')) document.getElementById(sItem+'r').style.display = 'block';}, 30000);
-	$.post("http://MessyStudio.com/Chrome/Auction/Data/" + GlobalX.AuctionID + "/Items/" + sItem + ".json", {
+	$.post("Data/" + GlobalX.AuctionID + "/Items/" + sItem + ".json", {
 		Nada: '',
 		},
 		function(data, status){
@@ -733,7 +733,7 @@ function RefreshItemDetail(sItem) {
 function RefreshItem(sItem) {
 	document.getElementById(sItem+'r').style.display = 'none';
 	setTimeout(function(){if (document.getElementById(sItem+'r')) document.getElementById(sItem+'r').style.display = 'block';}, 30000);
-	$.post("http://MessyStudio.com/Chrome/Auction/Data/" + GlobalX.AuctionID + "/Items/" + sItem + ".json", {
+	$.post("Data/" + GlobalX.AuctionID + "/Items/" + sItem + ".json", {
 		Nada: '',
 		},
 		function(data, status){
@@ -815,7 +815,7 @@ function OnSaveYourInfo(nIndex) {
 	else
 		objUpdateUser.Password = GlobalX.data.Users[nIndex].Password;
 	var sUpdateUser = JSON.stringify(objUpdateUser);
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		UpdateUser: sUpdateUser,
 		},
 		function(data, status){
@@ -1038,7 +1038,7 @@ function OnSaveItem(nIndex) {
 	var objItemOBJ = {};
 	objItemOBJ.Item = objItem;
 	var sItem = JSON.stringify(objItemOBJ);
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		ItemToSave: sItem,
 		},
 		function(data, status){
@@ -1108,7 +1108,7 @@ function OnSaveAuctionChanges() {
 	objAuctionUpdate.Ends = dEnd.valueOf() + (nTimeZoneOffsetInMinutes*60000);
 	objAuctionUpdate.Name = document.getElementById('AuctionName').value;
 	var sAuctionUpdate = JSON.stringify(objAuctionUpdate);
-	$.post("http://MessyStudio.com/Chrome/Auction/Auction.php", {
+	$.post("Auction.php", {
 		AuctionUpdate: sAuctionUpdate,
 		},
 		function(data, status){
