@@ -47,16 +47,16 @@ echo $sFeedback;
 // Functions
 
 function LogIn($sUserName, $sPassword) {
-
+	
 }
 
 function LogInWithUUID($sUUID) {
-
+	
 }
 
 function SubmitBid($SubmitBid) {
 	$objBid = json_decode($SubmitBid);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objBid->sAuctionID . "/Items/" . $objBid->sItem . ".json";
+	$sFileLocation = "Data/". $objBid->sAuctionID . "/Items/" . $objBid->sItem . ".json";
 	$sItem = file_get_contents($sFileLocation);
 	$objItem = json_decode($sItem);
 	date_default_timezone_set("UTC");
@@ -121,7 +121,7 @@ function SubmitBid($SubmitBid) {
 
 function SubmitMaxBid($SubmitMaxBid) {
 	$objBid = json_decode($SubmitMaxBid);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objBid->sAuctionID . "/Items/" . $objBid->sItem . ".json";
+	$sFileLocation = "Data/". $objBid->sAuctionID . "/Items/" . $objBid->sItem . ".json";
 	$sItem = file_get_contents($sFileLocation);
 	$objItem = json_decode($sItem);
 	date_default_timezone_set("UTC");
@@ -139,7 +139,7 @@ function SubmitMaxBid($SubmitMaxBid) {
 	$nBids = count($objItem->Item->BidHistory);
 	$sCurrentBid = ($nBids) ? $objItem->Item->BidHistory[$nBids-1]->Bid : $objItem->Item->StartingPrice - $objItem->Item->BidSteps;
 	$sMinNextBid = $sCurrentBid + $objItem->Item->BidSteps;
-
+	
 	if ($objBid->sMaxAmount < $objItem->Item->StartingPrice) {
 		$objItem->Item->Message = 'Bid below starting price';
 		$sUpdatedItem = json_encode($objItem);
@@ -252,7 +252,7 @@ function SubmitMaxBid($SubmitMaxBid) {
 
 function AddItemToWatch($AddItemToWatch) {
 	$objItem = json_decode($AddItemToWatch);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objItem->sAuctionID . "/Auction.json";
+	$sFileLocation = "Data/". $objItem->sAuctionID . "/Auction.json";
 	$sAuction = file_get_contents($sFileLocation);
 	$objAuction = json_decode($sAuction);
 	$nUserCount = count($objAuction->Users);
@@ -274,7 +274,7 @@ function AddItemToWatch($AddItemToWatch) {
 
 function RemoveItemFromWatch($RemoveItemFromWatch) {
 	$objItem = json_decode($RemoveItemFromWatch);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objItem->sAuctionID . "/Auction.json";
+	$sFileLocation = "Data/". $objItem->sAuctionID . "/Auction.json";
 	$sAuction = file_get_contents($sFileLocation);
 	$objAuction = json_decode($sAuction);
 	$nUserCount = count($objAuction->Users);
@@ -295,7 +295,7 @@ function RemoveItemFromWatch($RemoveItemFromWatch) {
 }
 
 function GetItemsList($sAuctionID) {
-	$ItemsDir = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $sAuctionID . "/Items/";
+	$ItemsDir = "Data/". $sAuctionID . "/Items/";
 	$aItems = scandir($ItemsDir);
 	$sItems = json_encode($aItems);
 	return $sItems;
@@ -303,7 +303,7 @@ function GetItemsList($sAuctionID) {
 
 function UpdateUser($UpdateUser) {
 	$objUpdateUser = json_decode($UpdateUser);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objUpdateUser->sAuctionID . "/Auction.json";
+	$sFileLocation = "Data/". $objUpdateUser->sAuctionID . "/Auction.json";
 	$sAuction = file_get_contents($sFileLocation);
 	$objAuction = json_decode($sAuction);
 	$nUserCount = count($objAuction->Users);
@@ -324,7 +324,7 @@ function UpdateUser($UpdateUser) {
 
 function AddNewUser($SubmitNewUser) {
 	$objNewUser = json_decode($SubmitNewUser);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objNewUser->sAuctionID . "/Auction.json";
+	$sFileLocation = "Data/". $objNewUser->sAuctionID . "/Auction.json";
 	$sAuction = file_get_contents($sFileLocation);
 	$objAuction = json_decode($sAuction);
 	$nUserCount = count($objAuction->Users);
@@ -357,7 +357,7 @@ function GetRandomCharacter() {
 
 function AuctionUpdate($AuctionUpdate) {
 	$objAuctionUpdate = json_decode($AuctionUpdate);
-	$sFileLocation = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objAuctionUpdate->sAuctionID . "/Auction.json";
+	$sFileLocation = "Data/". $objAuctionUpdate->sAuctionID . "/Auction.json";
 	$sAuction = file_get_contents($sFileLocation);
 	$objAuction = json_decode($sAuction);
 	$objAuction->Name = $objAuctionUpdate->Name;
@@ -370,7 +370,7 @@ function AuctionUpdate($AuctionUpdate) {
 
 function SaveItem($ItemToSave) {
 	$objItem = json_decode($ItemToSave);
-	$ItemsDir = "/home8/mulholl3/public_html/messystudio/Chrome/Auction/Data/". $objItem->Item->sAuctionID . "/Items/";
+	$ItemsDir = "Data/". $objItem->Item->sAuctionID . "/Items/";
 	$aItems = scandir($ItemsDir);
 	$nFileCount = count($aItems) -2;
 	$objItem->Item->UUID = 'I' . str_pad($nFileCount, 5, '0', STR_PAD_LEFT);
