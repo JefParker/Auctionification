@@ -315,6 +315,8 @@ function MakeMenuPage() {
 		sPage += "<p class='MenuItem''>";
 		sPage += "<a href='javascript:MakeAdminToolsPage()'>Admin Tools</a></p>";
 	}
+	sPage += "<p class='MenuItem''>";
+	sPage += "<a href='javascript:MakeAboutPage()'>About</a></p>";
 	if (getCookie('UUID')) {
 		sPage += "<p class='MenuItem''>";
 		sPage += "<a href='javascript:OnClickLogOut()'>Log Out</a></p>";
@@ -916,7 +918,7 @@ function MakeAdminToolsPage() {
 	var sPage = MakeMenuLink();
 	sPage += "<p class='Headline' style='text-align: center;' id='Welcome'>Admin Tools</p>";
 	sPage += "<p class='MenuItem'>";
-	sPage += "<a href='javascript:MakeAddItemPage()'>Add Item</a></p>";
+	sPage += "<a href='javascript:MakeAddItemPage(-1)'>Add Item</a></p>";
 	sPage += "<p class='MenuItem'>";
 	sPage += "<a href='javascript:MakeEditItemPage()'>Edit Item</a></p>";
 	sPage += "<p class='MenuItem'>";
@@ -926,8 +928,38 @@ function MakeAdminToolsPage() {
 	document.getElementById('PageContent').innerHTML = sPage;
 }
 
-function MakeAddItemPage() {
-	var nIndex = -1;
+function MakeEditItemDetailPage(sID) {
+	// alertify.alert("Function not yet implemented");
+	$.post("Data/" + GlobalX.AuctionID + "/Items/" + sID + ".json", {
+		Auction: '',
+		},
+		function(data, status) {
+			MakeAddItemPage(data.Item.UUID);
+			document.getElementById('Welcome').innerHTML = 'Edit Item';
+			document.getElementById('ItemName').value = data.Item.Name;
+			document.getElementById('ItemValue').value = data.Item.Value;
+			document.getElementById('ItemStartingPrice').value = data.Item.StartingPrice;
+			document.getElementById('ItemReserve').value = data.Item.Reserve;
+			document.getElementById('BidIncrements').value = data.Item.BidSteps;
+			document.getElementById('ItemShortDescription').value = data.Item.ShortDescription;
+			document.getElementById('ItemDescription').value = data.Item.Description;
+			document.getElementById('HideItem').checked = !data.Item.Show;
+			var dNow = new Date();
+			var nTimeZoneOffsetInMinutes = dNow.getTimezoneOffset();
+			var nTZStart = data.Item.Starts - (nTimeZoneOffsetInMinutes*60000);
+			var dStart = new Date(nTZStart);
+			var sStart = dStart.toISOString();
+			sStart = sStart.substr(0, 19);
+			document.getElementById('ItemStartDateTime').value = sStart;
+			var nTZSEnd = data.Item.Ends - (nTimeZoneOffsetInMinutes*60000);
+			var dEnd = new Date(nTZSEnd);
+			var sEnd= dEnd.toISOString();
+			sEnd = sEnd.substr(0, 19);
+			document.getElementById('ItemEndDateTime').value = sEnd;
+		}, "json");
+}
+
+function MakeAddItemPage(nIndex) {
 	var sPage = MakeMenuLink();
 	sPage += "<p class='Headline' style='text-align: center;' id='Welcome'>Add Item</p>";
 	sPage += "<p style='text-align: center;'>";
@@ -940,7 +972,7 @@ function MakeAddItemPage() {
 	sPage += "$<input type='text' class='Controls' style='text-align: center;' placeholder='Reserve Price' id='ItemReserve' maxlength='9' OnInput='ChangeItem(\""+nIndex+"\")' OnKeyUp='ChangeItem(\""+nIndex+"\")' OnChange='ChangeItem(\""+nIndex+"\")' OnPaste='ChangeItem(\""+nIndex+"\")' value=''></p>";
 	sPage += "<p style='text-align: center;'>";
 	sPage += "$<input type='text' class='Controls' style='text-align: center;' placeholder='Minimum Bid Increments' id='BidIncrements' maxlength='9' OnInput='ChangeItem(\""+nIndex+"\")' OnKeyUp='ChangeItem(\""+nIndex+"\")' OnChange='ChangeItem(\""+nIndex+"\")' OnPaste='ChangeItem(\""+nIndex+"\")' value=''></p>";
-	sPage += "<p style='text-align: center;'><input type='checkbox' id='HideItem' OnCheck='ChangeItem(\""+nIndex+"\")'> Hide Item?</p>";
+	sPage += "<p style='text-align: center;'><input type='checkbox' id='HideItem' OnChange='ChangeItem(\""+nIndex+"\")'> Hide Item?</p>";
 	sPage += "<p style='text-align: center;'>";
 	sPage += "<input type='text' class='Controls' style='text-align: center;' placeholder='Short Description' id='ItemShortDescription' maxlength='50' OnInput='ChangeItem(\""+nIndex+"\")' OnKeyUp='ChangeItem(\""+nIndex+"\")' OnChange='ChangeItem(\""+nIndex+"\")' OnPaste='ChangeItem(\""+nIndex+"\")' value=''></p>";
 	sPage += "<p style='text-align: center;'>";
@@ -954,7 +986,7 @@ function MakeAddItemPage() {
 	sStart = sStart.substr(0, 19);
 	sPage += "<p style='text-align: center;'>Bidding Start Date/Time</p>";
 	sPage += "<p style='text-align: center;'>";
-	sPage += "<input type='datetime-local' class='Controls' style='text-align: center;' title='Bidding Start Date/Time' id='ItemStartDateTime' value='" + sStart + "'></p>";
+	sPage += "<input type='datetime-local' class='Controls' style='text-align: center;' title='Bidding Start Date/Time' id='ItemStartDateTime' value='" + sStart + "' OnInput='ChangeItem(\""+nIndex+"\")' OnKeyUp='ChangeItem(\""+nIndex+"\")' OnChange='ChangeItem(\""+nIndex+"\")' OnPaste='ChangeItem(\""+nIndex+"\")'></p>";
 	sPage += "</div><br>"; // Start date/time box
 	sPage += "<div class='BidBox' style='display: block;'>";
 	var nTZSEnd = GlobalX.data.Ends - (nTimeZoneOffsetInMinutes*60000);
@@ -963,7 +995,7 @@ function MakeAddItemPage() {
 	sEnd = sEnd.substr(0, 19);
 	sPage += "<p style='text-align: center;'>Bidding End Date/Time</p>";
 	sPage += "<p style='text-align: center;'>";
-	sPage += "<input type='datetime-local' class='Controls' style='text-align: center;' title='Bidding End Date/Time' id='ItemEndDateTime' value='" + sEnd + "'></p>";
+	sPage += "<input type='datetime-local' class='Controls' style='text-align: center;' title='Bidding End Date/Time' id='ItemEndDateTime' value='" + sEnd + "' OnInput='ChangeItem(\""+nIndex+"\")' OnKeyUp='ChangeItem(\""+nIndex+"\")' OnChange='ChangeItem(\""+nIndex+"\")' OnPaste='ChangeItem(\""+nIndex+"\")'></p>";
 	sPage += "</div>"; // End date/time box
 	sPage += "<p id='Feedback' style='text-align: center; font-size: 70%;'>Enter Item Name</p>";
 	sPage += "<p style='text-align: center;'>";
@@ -974,7 +1006,7 @@ function MakeAddItemPage() {
 	document.getElementById('PageContent').innerHTML = sPage;
 }
 
-function ChangeItem(nIndex) {
+function ChangeItem() {
 	document.getElementById('SaveItem').disabled = true;
 	var sItemName = document.getElementById('ItemName').value.trim();
 	var sItemShortDescription = document.getElementById('ItemShortDescription').value.trim();
@@ -1002,7 +1034,6 @@ function ChangeItem(nIndex) {
 		sFeedback = 'Enter a short description';
 	else if (sItemDescription.length < 6)
 		sFeedback = 'Enter a full description';
-
 	else {
 		document.getElementById('SaveItem').disabled = false;
 		sFeedback = '';
@@ -1014,7 +1045,7 @@ function OnSaveItem(nIndex) {
 	document.getElementById('SaveItem').disabled = true;
 	var objItem = {};
 	objItem.Name = document.getElementById('ItemName').value.trim();
-	objItem.UUID = '';
+	objItem.UUID = (-1 == nIndex) ? "" : nIndex;
 	objItem.ShortDescription = document.getElementById('ItemShortDescription').value.trim();
 	objItem.Description = document.getElementById('ItemDescription').value.trim();
 	objItem.Value = Number(document.getElementById('ItemValue').value.trim()).toFixed(2);
@@ -1031,7 +1062,7 @@ function OnSaveItem(nIndex) {
 	objItem.Ends = dEnd.valueOf() + (nTimeZoneOffsetInMinutes*60000);
 	objItem.Message = '';
 	objItem.Show = !document.getElementById('HideItem').checked;
-	objItem.New = (-1 === nIndex) ? true : false;
+	// objItem.New = (-1 == nIndex) ? true : false;
 	objItem.sAuctionID = GlobalX.AuctionID;
 	objItem.MaxBid = {};
 	objItem.BidHistory = [];
@@ -1041,7 +1072,7 @@ function OnSaveItem(nIndex) {
 	$.post("Auction.php", {
 		ItemToSave: sItem,
 		},
-		function(data, status){
+		function(data, status) {
 			if (data) {
 				var sPage = MakeMenuLink();
 				sPage += "<p class='Headline' style='text-align: center;' id='Welcome'>Item " + data.Item.UUID + " Saved</p>";
@@ -1083,7 +1114,8 @@ function MakeEditAuctionPage() {
 	sPage += "</div>"; // End date/time box
 
 	sPage += "<p style='text-align: center; font-size: 80%;'>* only affects items you create going forward</p>";
-
+	sPage += "<p style='text-align: center;'>Auction ID: "+GlobalX.AuctionID+"</p>";
+	sPage += "<p style='text-align: center;'>Admin passcode: "+GlobalX.data.AdminPasscode+"</p>";
 	sPage += "<p style='text-align: center;'>";
 	sPage += "<input type='button' id='SaveAuctionInfo' value='Save' class='Controls' OnClick='OnSaveAuctionChanges()'>";
 	sPage += "<input type='button' id='Cancel' value='Cancel' class='Controls' OnClick='MakeAdminToolsPage()'></p>";
@@ -1143,8 +1175,49 @@ function MakeEditItemPage() {
 	document.getElementById('PageContent').innerHTML = sPage;
 }
 
-function MakeEditItemDetailPage() {
-	alertify.alert("Function not yet implemented");
+function MakeAboutPage() {
+	$.post("Terms.txt", {
+		Auction: '',
+		},
+		function(data, status){
+			var sTerms = data.replace(/\n/g, '<br>');
+			var sPage = MakeMenuLink();
+			sPage += "<p class='Headline' style='text-align: center;' id='Welcome'>About</p>";
+			sPage += "<div class='CopyBox'>";
+			sPage += "<p><b>Auctionification</b></p>";
+			sPage += "<p style='text-align: left;'>"+sTerms+"</p><br>";
+			sPage += "<p><b>Credits</b></p>";
+			sPage += "<p style='text-align: left;'>- Icons by http://iconleak.com</p><br>";
+			sPage += "</div>";
+			sPage += "<p style='text-align: center;'>";
+			sPage += "<input type='text' id='AdminPasscode' class='Controls' maxlength='6' style='text-align: center;' placeholder='Admin Passcode' value=''></p>";
+			sPage += "<p style='text-align: center;'>";
+			sPage += "<input type='button' id='SubmitAdminPasscode' value='Submit' class='Controls' OnClick='SubmitAdminPasscodeBtn()'></p>";
+			sPage += "<br><br>";
+			sPage += MakeLogo(true);
+			document.getElementById('PageContent').innerHTML = sPage;
+		}, "text");
+}
+
+function SubmitAdminPasscodeBtn() {
+	var sPasscode = document.getElementById('AdminPasscode').value.trim();
+	if (GlobalX.data.AdminPasscode === sPasscode) {
+		var objMakeAdmin = {};
+		objMakeAdmin.sUUID = GlobalX.UUID;
+		objMakeAdmin.sAuctionID = GlobalX.AuctionID;
+		var sMakeAdmin = JSON.stringify(objMakeAdmin);
+		$.post("Auction.php", {
+		MakeAdmin: sMakeAdmin,
+		},
+		function(data, status) {
+			GlobalX.data = data;
+			GlobalX.Admin = true;
+			alertify.alert('You are now an administrator of this auction.');
+			MakeMenuPage();
+		}, "json");
+	}
+	else
+		alertify.alert('Incorrect code');
 }
 
 // General useful functions
