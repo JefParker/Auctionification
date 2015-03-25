@@ -14,6 +14,7 @@ $UpdateUser = $_POST['UpdateUser'];
 $SubmitNewUser = $_POST['SubmitNewUser'];
 $AuctionUpdate = $_POST['AuctionUpdate'];
 $ItemToSave = $_POST['ItemToSave'];
+$MakeAdmin = $_POST['MakeAdmin'];
 
 
 
@@ -40,6 +41,8 @@ else if ($AuctionUpdate)
 	$sFeedback .= AuctionUpdate($AuctionUpdate);
 else if ($ItemToSave)
 	$sFeedback .= SaveItem($ItemToSave);
+else if ($MakeAdmin)
+	$sFeedback .= MakeAdmin($MakeAdmin);
 
 echo $sFeedback;
 
@@ -371,14 +374,40 @@ function AuctionUpdate($AuctionUpdate) {
 function SaveItem($ItemToSave) {
 	$objItem = json_decode($ItemToSave);
 	$ItemsDir = "Data/". $objItem->Item->sAuctionID . "/Items/";
-	$aItems = scandir($ItemsDir);
-	$nFileCount = count($aItems) -2;
-	$objItem->Item->UUID = 'I' . str_pad($nFileCount, 5, '0', STR_PAD_LEFT);
+	if ($objItem->Item->UUID) {  // The item exists and is being edited
+		$sFileName = $ItemsDir . $objItem->Item->UUID . '.json';
+		$sOldItem = file_get_contents($sFileName);
+		$objOldItem = json_decode($sOldItem);
+		// Keep the bidding and max bid information as is
+		$objItem->Item->Message = $objOldItem->Item->Message;
+		$objItem->Item->MaxBid = $objOldItem->Item->MaxBid;
+		$objItem->Item->BidHistory = $objOldItem->Item->BidHistory;
+	}
+	else {  // If the item is being created (not just edited)
+		$aItems = scandir($ItemsDir);
+		$nFileCount = count($aItems) -2;
+		$objItem->Item->UUID = 'I' . str_pad($nFileCount, 5, '0', STR_PAD_LEFT);
+	}
 	$sNewFileName = $ItemsDir . $objItem->Item->UUID . '.json';
 	$sItem = json_encode($objItem, JSON_PRETTY_PRINT);
 	file_put_contents($sNewFileName, $sItem, LOCK_EX);
 	return $sItem;
 }
 
+function MakeAdmin($MakeAdmin) {
+	$objMakeAdmin = json_decode($MakeAdmin);
+	$sFileLocation = "Data/". $objMakeAdmin->sAuctionID . "/Auction.json";
+	$sAuction = file_get_contents($sFileLocation);
+	$objAuction = json_decode($sAuction);
+	$nUserCount = count($objAuction->Users);
+	for ($i=0; $i<$nUserCount; $i++) {
+		if ($objAuction->Users[$i]->UUID === $objMakeAdmin->sUUID) {
+			$objAuction->Users[$i]->Admin = true;
+			$sAuctionUpdated = json_encode($objAuction, JSON_PRETTY_PRINT);
+			file_put_contents($sFileLocation, $sAuctionUpdated, LOCK_EX);
+			return $sAuctionUpdated;
+		}
+	}
+}
 
 ?>
